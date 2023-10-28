@@ -1,0 +1,56 @@
+{
+  "expo": {
+    "name": "AmeyaShetye",
+    "slug": "AmeyaShetye",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/imagesAssets/Ameya_logo_2.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/imagesAssets/Ameya_logo_2.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFC436"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ameya1031.AmeyaShetye"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/imagesAssets/Ameya_logo_2.png",
+        "backgroundColor": "#FFC436"
+      },
+      "permissions": [
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.DOWNLOAD_WITHOUT_NOTIFICATION",
+        "android.permission.ACCESS_NETWORK_STATE"
+      ]
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "@config-plugins/react-native-blob-util",
+      "@config-plugins/react-native-pdf"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "5625150c-5596-49f7-958f-9bd79f36be09"
+      }
+    }
+  }
+}
