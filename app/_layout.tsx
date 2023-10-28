@@ -75,7 +75,13 @@ function RootLayoutNav() {
                   headerShown: false,
                 }}
               />
-              <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+              <Stack.Screen
+                name="modal"
+                options={{
+                  headerTitle: "Disclaimer",
+                  presentation: "modal",
+                }}
+              />
             </Stack>
             <Toast />
           </ThemeProvider>
