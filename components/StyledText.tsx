@@ -1,9 +1,9 @@
+import React from "react";
 import { Text, TextProps, useThemeColor } from "./Themed";
 import { Dimensions, PixelRatio, Platform, StyleSheet } from "react-native";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
-// based on iphone 5s's scale
 const scale = SCREEN_WIDTH / 320;
 type FontFamilyType = "SpaceMono" | "TiltNeon";
 interface CustomTextProps extends TextProps {
@@ -11,7 +11,6 @@ interface CustomTextProps extends TextProps {
   size?: number;
   lightColor?: string;
   darkColor?: string;
-  // Add other custom props as needed
 }
 
 function normalize(size: any) {
@@ -52,7 +51,7 @@ const CustomText: React.FC<CustomTextProps> = ({
 
 const styles = StyleSheet.create({
   defaultStyle: {
-    // Add any default styles you want
+    // to be added
   },
 });
 

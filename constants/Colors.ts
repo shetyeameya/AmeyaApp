@@ -1,10 +1,11 @@
-export const tintColorLight = "#2f95dc";
-export const tintColorDark = "#4EF037";
-export const yellowColor = "#F4CE14";
+export const tintColorLight = "#FFC436";
+export const tintColorDark = "#FFC436";
+export const yellowColor = "#FFC436";
 export const blueColor = "#00A9FF";
 export const lightbackgroundColor = "#fff";
 export const datkbackgroundColor = "#000";
-
+export const blackcontrast = "#1a2f28";
+export const ContrastWhite = "#F5F7F8";
 export default {
   light: {
     text: "#000",

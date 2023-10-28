@@ -1,9 +1,45 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { ScrollView, StyleSheet, Text, Image } from "react-native";
+import React, { useEffect, useState } from "react";
+import { useThemeColor, View } from "../../../components/Themed";
 import CustomText from "../../../components/StyledText";
 import CustomCarousel from "../../../Reusable/ImageCaro";
 import List from "../../../fakeData/List.json";
+import { tintColorDark, tintColorLight } from "../../../constants/Colors";
+import { getImages } from "../../../Reusable/CommonFunctions";
+import LoadingComponent from "../../../Reusable/Loading";
+const staticImage = require("../../../assets/imagesAssets/ameyaTrophy.png");
+
+type Bucket = "family" | "romeo" | "food" | "sports";
 const Extra = () => {
+  const tintColor = useThemeColor(
+    { light: tintColorLight, dark: tintColorDark },
+    "tint"
+  );
+  const [sportsdata, setsportsdata] = useState<string[] | null>(null);
+  const [fooddata, setfooddata] = useState<string[] | null>(null);
+  const [loading, setloading] = useState<boolean>(false);
+  useEffect(() => {
+    const getImagesList = async (bucket: Bucket) => {
+      const response = await getImages(bucket);
+      if (bucket === "sports") {
+        if (response !== null) {
+          setsportsdata(response);
+        } else {
+          setsportsdata(null);
+        }
+      } else {
+        if (response !== null) {
+          setfooddata(response);
+        } else {
+          setfooddata(null);
+        }
+      }
+    };
+
+    getImagesList("food");
+    getImagesList("sports");
+  }, []);
+  console.log("hello");
   return (
     <ScrollView style={{ flex: 1 }}>
       <View
@@ -12,7 +48,26 @@ const Extra = () => {
           padding: "2%",
         }}
       >
-        <CustomCarousel images={List} />
+        <View style={[styles.container, { backgroundColor: tintColor }]}>
+          {/* Image of the boy */}
+          <View
+            style={{
+              flex: 0.4,
+              backgroundColor: tintColor,
+            }}
+          >
+            <Image source={staticImage} style={[styles.boyImage]} />
+          </View>
+          {/* Text Alert View */}
+          <View style={[styles.alertBox, { backgroundColor: tintColor }]}>
+            <CustomText size={18} style={styles.alertTitle}>
+              "Passion overcomes odds."
+            </CustomText>
+            <CustomText size={16} style={styles.alertTitle}>
+              It's not over till its over.
+            </CustomText>
+          </View>
+        </View>
         {/* Education */}
         <CustomText size={12}>
           Today, as I look back, I feel I have come a long way from being an
@@ -33,7 +88,11 @@ const Extra = () => {
           character.
         </CustomText>
         {/* Cooking */}
-        <CustomCarousel images={List} />
+        <LoadingComponent loading={loading}>
+          {!loading && fooddata !== null && (
+            <CustomCarousel images={fooddata} uri={true} />
+          )}
+        </LoadingComponent>
         <CustomText size={12}>
           Cooking has always been my passion, and I owe much of this fervor to
           my mother. She never really pushed me towards the culinary arts;
@@ -66,7 +125,11 @@ const Extra = () => {
           moment in the kitchen.
         </CustomText>
         {/* Cricket */}
-        <CustomCarousel images={List} />
+        <LoadingComponent loading={loading}>
+          {!loading && sportsdata !== null && (
+            <CustomCarousel images={sportsdata} uri={true} />
+          )}
+        </LoadingComponent>
         <CustomText size={12}>
           From a young age, my heart has been ensnared by two sports: cricket
           and football. My prowess in both games was recognized early on, as
@@ -91,4 +154,35 @@ const Extra = () => {
 
 export default Extra;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 10,
+    height: "100%",
+    maxHeight: 180,
+    minHeight: 130,
+    marginTop: 50,
+    marginBottom: 20,
+  },
+  boyImage: {
+    position: "absolute",
+    left: 0,
+    top: -145,
+    width: "100%",
+    height: 210,
+    resizeMode: "cover",
+  },
+  alertBox: {
+    flex: 0.6,
+    borderRadius: 10,
+    padding: 20,
+  },
+  alertTitle: {
+    fontWeight: "bold",
+  },
+  alertDescription: {
+    marginTop: 10,
+  },
+});

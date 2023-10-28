@@ -11,13 +11,19 @@ import { ScrollView } from "react-native-gesture-handler";
 import { TapGestureHandler, State } from "react-native-gesture-handler";
 
 const { width } = Dimensions.get("window");
-const minusVal = (Dimensions.get("window").width * 2) / 100;
+const minusVal = (Dimensions.get("window").width * 4) / 100;
 interface Props {
   images: any;
+  uri?: boolean;
 }
-const CustomCarousel: React.FC<Props> = ({ images }) => {
+
+type imagesL = {
+  id: number;
+  imageURL: string;
+};
+const CustomCarousel: React.FC<Props> = ({ images, uri }) => {
   const [isModalVisible, setModalVisible] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState<imagesL | null>(null);
   const doubleTapRef = useRef();
 
   const handleDoubleTap = (event: any, image: any) => {
@@ -33,22 +39,45 @@ const CustomCarousel: React.FC<Props> = ({ images }) => {
         horizontal
         showsHorizontalScrollIndicator={false}
         pagingEnabled
-        style={{ width: "100%", height: 400 }}
+        style={{
+          width: "100%",
+          height: 400,
+          borderRadius: 20,
+          marginVertical: 20,
+          overflow: "hidden",
+        }}
       >
-        {images.map((image: any, index: any) => (
-          <TapGestureHandler
-            key={index}
-            numberOfTaps={2}
-            onHandlerStateChange={(event) => handleDoubleTap(event, image)}
-          >
-            <Image
+        {images.map((image: any, index: any) => {
+          // console.log("ImageName::", image);
+          return (
+            <TapGestureHandler
               key={index}
-              source={{ uri: image }}
-              style={{ width: width - minusVal, height: 400 }}
-              resizeMode="cover"
-            />
-          </TapGestureHandler>
-        ))}
+              numberOfTaps={2}
+              onHandlerStateChange={(event) => handleDoubleTap(event, image)}
+            >
+              {uri ? (
+                <Image
+                  key={index}
+                  source={{ uri: image.imageURL }}
+                  style={{
+                    width: width - minusVal,
+                    height: 400,
+                    borderRadius: 20,
+                    overflow: "hidden",
+                  }}
+                  resizeMode="contain"
+                />
+              ) : (
+                <Image
+                  key={index}
+                  source={image}
+                  style={{ width: width - minusVal, height: 400 }}
+                  resizeMode="cover"
+                />
+              )}
+            </TapGestureHandler>
+          );
+        })}
       </ScrollView>
 
       {isModalVisible && (
@@ -64,13 +93,26 @@ const CustomCarousel: React.FC<Props> = ({ images }) => {
             maximumZoomScale={2}
             minimumZoomScale={1}
           >
-            <Image
-              source={{
-                uri: selectedImage !== null && selectedImage,
-              }}
-              style={{ width, height: 400, alignSelf: "center" }}
-              resizeMode="contain"
-            />
+            {uri ? (
+              <Image
+                source={{
+                  uri:
+                    selectedImage !== null ? selectedImage.imageURL : undefined,
+                }}
+                style={{ width, height: 400, alignSelf: "center" }}
+                resizeMode="contain"
+              />
+            ) : (
+              <Image
+                source={
+                  selectedImage !== null
+                    ? selectedImage
+                    : require("../assets/imagesAssets/ameyachristmas.jpg")
+                }
+                style={{ width, height: 400, alignSelf: "center" }}
+                resizeMode="contain"
+              />
+            )}
           </ScrollView>
 
           <TouchableOpacity

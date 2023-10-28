@@ -26,9 +26,30 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
+        name="romeo"
+        options={{
+          headerTitle: "Romeo Information",
+          headerShown: true,
+        }}
+      />
+      <Stack.Screen
+        name="coverletter"
+        options={{
+          headerTitle: "Cover-Letter",
+          headerShown: true,
+        }}
+      />
+      <Stack.Screen
         name="experience"
         options={{
           headerTitle: "Experience",
+          headerShown: true,
+        }}
+      />
+      <Stack.Screen
+        name="resume"
+        options={{
+          headerTitle: "Resume",
           headerShown: true,
         }}
       />

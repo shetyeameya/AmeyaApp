@@ -54,7 +54,6 @@ const CusCarousel: React.FC<Props> = ({ data }) => {
             key={item.title}
             style={styles.card}
             onPress={() => {
-              console.log("Clicked", item.link);
               router.push(item.link);
             }}
           >

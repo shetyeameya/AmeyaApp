@@ -1,16 +1,60 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { ScrollView, StyleSheet, Text, Image, Dimensions } from "react-native";
+import {
+  datkbackgroundColor,
+  lightbackgroundColor,
+  tintColorDark,
+  tintColorLight,
+  yellowColor,
+} from "../../../constants/Colors";
+import { useThemeColor, View } from "../../../components/Themed";
+import React, { useEffect, useState } from "react";
 import CustomText from "../../../components/StyledText";
-
+import CustomCarousel from "../../../Reusable/ImageCaro";
+import LoadingComponent from "../../../Reusable/Loading";
+import { EXPO_PUBLIC_IMAGES_URL, EXPO_PUBLIC_SECRET_KEY } from "@env";
+import { getImages } from "../../../Reusable/CommonFunctions";
+const staticImage = require("../../../assets/imagesAssets/family.png");
 const About = () => {
+  const tintColor = useThemeColor(
+    { light: tintColorLight, dark: tintColorDark },
+    "tint"
+  );
+
+  const [loading, setloading] = useState<boolean>(false);
+  const [data, setData] = useState<string[] | null>(null);
+  useEffect(() => {
+    const getImagesList = async () => {
+      const response = await getImages("family");
+      if (response !== null) {
+        setData(response);
+      } else {
+        setData(null);
+      }
+    };
+
+    getImagesList();
+  }, []);
+
   return (
     <ScrollView style={{ flex: 1 }}>
       <View
         style={{
           display: "flex",
           padding: "2%",
+          flexDirection: "column",
         }}
       >
+        <View style={[styles.container, { backgroundColor: tintColor }]}>
+          {/* Image of the boy */}
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: tintColor,
+            }}
+          >
+            <Image source={staticImage} style={styles.boyImage} />
+          </View>
+        </View>
         <CustomText size={12}>
           Albert Einstein’s famous words ring true every time I feel a bit
           deflated or when I do not live up to my own expectations; I have
@@ -50,6 +94,11 @@ const About = () => {
           targets. Now I am working as ReactJS and Native developer and back to
           coding, my passion.
         </CustomText>
+        <LoadingComponent loading={loading}>
+          {!loading && data !== null && (
+            <CustomCarousel images={data} uri={true} />
+          )}
+        </LoadingComponent>
       </View>
     </ScrollView>
   );
@@ -57,4 +106,32 @@ const About = () => {
 
 export default About;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 10,
+    height: "100%",
+    maxHeight: 240,
+    minHeight: 230,
+    marginTop: 0,
+    marginBottom: 20,
+  },
+  boyImage: {
+    width: "100%",
+    height: 240,
+    resizeMode: "stretch",
+  },
+  alertBox: {
+    flex: 0.6,
+    borderRadius: 10,
+    padding: 20,
+  },
+  alertTitle: {
+    fontWeight: "bold",
+  },
+  alertDescription: {
+    marginTop: 10,
+  },
+});

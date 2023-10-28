@@ -9,6 +9,10 @@ import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
 import { useColorScheme } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { AuthPopupContextProvider } from "../Context/loginSingContext";
+import { ToastProvider } from "../Context/ToastContext";
+import React from "react";
+import Toast from "../Reusable/Toast";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -52,24 +56,31 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen
-            name="index"
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="(tabs)"
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-        </Stack>
-      </ThemeProvider>
-    </GestureHandlerRootView>
+    <AuthPopupContextProvider>
+      <ToastProvider>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <ThemeProvider
+            value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+          >
+            <Stack initialRouteName="index" screenOptions={{}}>
+              <Stack.Screen
+                name="index"
+                options={{
+                  headerShown: false,
+                }}
+              />
+              <Stack.Screen
+                name="(tabs)"
+                options={{
+                  headerShown: false,
+                }}
+              />
+              <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+            </Stack>
+            <Toast />
+          </ThemeProvider>
+        </GestureHandlerRootView>
+      </ToastProvider>
+    </AuthPopupContextProvider>
   );
 }

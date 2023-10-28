@@ -1,8 +1,14 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "expo-router";
 import LoginPage from "../components/Login/Login";
+import { Redirect } from "expo-router";
+import { useAuthPopupState } from "../Context/loginSingContext";
+
 const Login = () => {
+  const { isLoggedIn } = useAuthPopupState();
+
+  console.log("isLog", isLoggedIn);
   return (
     <View
       style={{
@@ -12,10 +18,7 @@ const Login = () => {
         alignItems: "center",
       }}
     >
-      {/* <Link href={"/(tabs)/home"} replace>
-        Login
-      </Link> */}
-      <LoginPage />
+      {!isLoggedIn ? <LoginPage /> : <Redirect href="/(tabs)/home" />}
     </View>
   );
 };

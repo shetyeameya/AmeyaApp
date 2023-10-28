@@ -1,11 +1,12 @@
 import {
   StyleSheet,
   Text,
-  View,
   ScrollView,
   TouchableOpacity,
+  Image,
 } from "react-native";
-import { useThemeColor } from "../../../components/Themed";
+
+import { useThemeColor, View } from "../../../components/Themed";
 import {
   datkbackgroundColor,
   lightbackgroundColor,
@@ -22,6 +23,8 @@ import {
 } from "../../../fakeData/ExperienceData";
 import CustomText from "../../../components/StyledText";
 import CusAccordian from "../../../Reusable/CusAccordian";
+
+const staticImage = require("../../../assets/imagesAssets/cartoongrad.png");
 const Experience = () => {
   const color = useThemeColor(
     { light: lightbackgroundColor, dark: datkbackgroundColor },
@@ -40,34 +43,65 @@ const Experience = () => {
       setActiveIndex(index);
     }
   };
-  console.log("wk::", workExperience);
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
+      style={styles.container}
+    >
       <View>
+        <View style={[styles.containerimg, { backgroundColor: tintColor }]}>
+          {/* Image of the boy */}
+          <View
+            style={{
+              flex: 0.4,
+              backgroundColor: tintColor,
+            }}
+          >
+            <Image source={staticImage} style={[styles.boyImage]} />
+          </View>
+          {/* Text Alert View */}
+          <View style={[styles.alertBox, { backgroundColor: tintColor }]}>
+            <CustomText size={14} style={styles.alertTitle}>
+              Southern Methodist University | M.S. Electrical Engineering,
+              Dallas, Texas
+            </CustomText>
+            <CustomText size={13} style={styles.alertTitle}>
+              | May 2016"
+            </CustomText>
+          </View>
+        </View>
         {skillsList && (
-          <View>
+          <View style={{ flex: 1 }}>
             <CustomText size={18}>Skills List : </CustomText>
-            <CusAccordian data={null} list={skillsList} />
+            <CusAccordian key={"skillsList"} data={null} list={skillsList} />
           </View>
         )}
       </View>
-      <View>
+      <View style={{ flex: 1 }}>
         {workExperience && (
           <View>
             <CustomText size={18}>Work Experience : </CustomText>
-            <CusAccordian data={workExperience} list={null} />
+            <CusAccordian
+              key={"workExperience"}
+              data={workExperience}
+              list={null}
+            />
           </View>
         )}
       </View>
-      <View>
+      <View style={{ flex: 1 }}>
         {certificationsList && (
           <View>
             <CustomText size={18}>Certifications List : </CustomText>
-            <CusAccordian data={null} list={certificationsList} />
+            <CusAccordian
+              key={"certificationsList"}
+              data={null}
+              list={certificationsList}
+            />
           </View>
         )}
       </View>
-      <View style={{ marginBottom: "2%" }}>
+      <View style={{ marginBottom: "2%", flex: 1 }}>
         <CustomText size={18}>Education: </CustomText>
         {educationList &&
           educationList.map((val: any) => {
@@ -113,5 +147,36 @@ const styles = StyleSheet.create({
   },
   description: {
     marginLeft: 10,
+  },
+  containerimg: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 10,
+    height: "100%",
+    maxHeight: 180,
+    minHeight: 130,
+    marginTop: 50,
+    marginBottom: 20,
+    marginHorizontal: "2%",
+  },
+  boyImage: {
+    position: "absolute",
+    left: 0,
+    top: -125,
+    width: "100%",
+    height: 190,
+    resizeMode: "cover",
+  },
+  alertBox: {
+    flex: 0.6,
+    borderRadius: 10,
+    padding: 20,
+  },
+  alertTitle: {
+    fontWeight: "bold",
+  },
+  alertDescription: {
+    marginTop: 10,
   },
 });

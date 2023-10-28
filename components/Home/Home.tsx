@@ -4,6 +4,7 @@ import React from "react";
 import { yellowColor, blueColor } from "../../constants/Colors";
 import CustomText from "../StyledText";
 import CusCarousel from "../../Reusable/CusCarousel";
+import PersonalInfo from "./PersonalInfo";
 
 const Home = () => {
   const width = Dimensions.get("screen").width;
@@ -26,17 +27,17 @@ const Home = () => {
     },
     {
       title: "Romeo",
-      link: "",
+      link: "/(tabs)/home/romeo",
       icon: "dog",
     },
     {
       title: "Resume",
-      link: "",
+      link: "/(tabs)/home/resume",
       icon: "file-document",
     },
     {
       title: "Cover-Letter",
-      link: "",
+      link: "/(tabs)/home/coverletter",
       icon: "file-document-multiple",
     },
   ];
@@ -49,6 +50,7 @@ const Home = () => {
       }}
     >
       <View>
+        <PersonalInfo />
         <CusCarousel data={optionsList} />
       </View>
     </View>

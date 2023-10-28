@@ -1,3 +1,4 @@
+import React from "react";
 import { TextInput, TextInputProps, useThemeColor } from "../components/Themed";
 import { Dimensions, PixelRatio, Platform, StyleSheet } from "react-native";
 
@@ -11,8 +12,6 @@ interface CustomInputTextProps extends TextInputProps {
   darkColor?: string;
   lightbackgroundColor?: string;
   datkbackgroundColor?: string;
-
-  // Add other custom props as needed
 }
 
 function normalize(size: any) {
@@ -63,7 +62,6 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 10,
     borderWidth: 2,
-    // Add any default styles you want
   },
 });
 

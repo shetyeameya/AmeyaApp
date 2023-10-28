@@ -4,6 +4,7 @@ import { Pressable, useColorScheme } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Colors from "../../constants/Colors";
+import React from "react";
 
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
@@ -50,8 +51,9 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="pokemonGo"
         options={{
+          headerShown: false,
           tabBarShowLabel: false,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="pokeball" size={30} color={color} />

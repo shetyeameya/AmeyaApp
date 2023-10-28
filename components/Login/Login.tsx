@@ -26,6 +26,11 @@ import {
 import { useThemeColor } from "../../components/Themed";
 import CustomInputText from "../../Reusable/StyledInput";
 import { useRouter } from "expo-router";
+import {
+  useAuthPopupDispatch,
+  useAuthPopupState,
+} from "../../Context/loginSingContext";
+
 const staticImage = require("../../assets/imagesAssets/Ameya_logo_2.png");
 const Login = () => {
   const loginValidationSchema = yup.object().shape({
@@ -42,15 +47,20 @@ const Login = () => {
     { light: lightbackgroundColor, dark: datkbackgroundColor },
     "background"
   );
+  const bgreverseColor = useThemeColor(
+    { light: datkbackgroundColor, dark: lightbackgroundColor },
+    "background"
+  );
   const tintColor = useThemeColor(
     { light: tintColorLight, dark: tintColorDark },
     "tint"
   );
   const router = useRouter();
+  const authDispatch = useAuthPopupDispatch();
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={[styles.container, { backgroundColor: bgColor }]}
+      style={[styles.container, { backgroundColor: tintColor }]}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <SafeAreaView
@@ -66,8 +76,8 @@ const Login = () => {
         >
           <View
             style={{
-              flex: 0.4,
-              justifyContent: "center",
+              flex: 0.5,
+              justifyContent: "flex-start",
               alignItems: "center",
               width: "100%",
               height: "100%",
@@ -82,10 +92,20 @@ const Login = () => {
           <View style={[styles.loginContainer]}>
             <Formik
               validationSchema={loginValidationSchema}
-              initialValues={{ email: "", password: "" }}
+              initialValues={{ email: "", password: "", firstName: "" }}
               onSubmit={(values) => {
+                authDispatch({
+                  type: "POST_LOGIN_SUCCESS",
+                  args: {
+                    signupVisible: false,
+                    loginVisible: false,
+                    isLoggedIn: true,
+                    jwtToken: `logedin+${values.email}`,
+                    Email: values.email,
+                    FirstName: values.firstName,
+                  },
+                });
                 router.push("/(tabs)/home");
-                console.log(values);
               }}
             >
               {({
@@ -98,6 +118,20 @@ const Login = () => {
                 isValid,
               }) => (
                 <>
+                  <CustomInputText
+                    placeholder="First Name"
+                    onChangeText={handleChange("firstName")}
+                    onBlur={handleBlur("firstName")}
+                    value={values.firstName}
+                  />
+                  {errors.email && (
+                    <CustomText
+                      size={12}
+                      style={{ width: "100%", textAlign: "left", color: "red" }}
+                    >
+                      {errors.email}
+                    </CustomText>
+                  )}
                   <CustomInputText
                     // name="email"
                     placeholder="Email Address"
@@ -138,10 +172,12 @@ const Login = () => {
                       alignItems: "center",
                       width: "100%",
                       display: "flex",
-                      marginTop: 50,
+                      marginTop: 30,
                       borderRadius: 10,
-                      borderWidth: 2,
+                      borderWidth: 4,
                       backgroundColor: tintColor,
+                      zIndex: 9,
+                      elevation: 9,
                     }}
                     onPress={() => {
                       handleSubmit();
@@ -182,8 +218,8 @@ const styles = StyleSheet.create({
   },
   ImageBackground: {
     resizeMode: "contain",
-    width: "95%",
-    height: 80,
+    width: "100%",
+    height: "100%",
     alignItems: "center",
   },
 });

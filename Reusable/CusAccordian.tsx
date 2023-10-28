@@ -42,83 +42,85 @@ const CusAccordian: React.FC<Props> = ({ data, list }) => {
     "tint"
   );
 
-  const [activeIndex, setActiveIndex] = useState(null);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const toggleAccordion = (index: any) => {
-    if (activeIndex === index) {
-      setActiveIndex(null);
-    } else {
-      setActiveIndex(index);
-    }
+    setActiveIndex((prevIndex) => (prevIndex === index ? null : index));
   };
-  console.log("wk::", workExperience);
   return (
     <ScrollView style={styles.container}>
-      {data !== null &&
-        data.map((job: any, index: any) => (
-          <View key={index} style={[styles.job, { borderColor: tintColor }]}>
-            <TouchableOpacity
-              style={[styles.accView]}
-              onPress={() => toggleAccordion(index)}
-            >
-              <CustomText size={15} style={styles.title}>
-                {job.title}
-              </CustomText>
-              <AntDesign
-                name={activeIndex === index ? "caretup" : "caretdown"}
-                size={24}
-                color="white"
-              />
-            </TouchableOpacity>
-            {activeIndex === index && (
-              <View style={styles.descriptionContainer}>
-                {job.description.map((desc: any, descIndex: any) => (
-                  <View key={descIndex} style={styles.descItem}>
-                    <CustomText
-                      size={14}
-                      style={[
-                        styles.header,
-                        { textDecorationColor: tintColor },
-                      ]}
-                    >
-                      {desc.header}
-                    </CustomText>
-                    <CustomText size={13} style={styles.description}>
-                      {desc.experience}
-                    </CustomText>
-                  </View>
-                ))}
-              </View>
-            )}
-          </View>
-        ))}
-      {list !== null &&
-        list.map((job: any, index: any) => (
-          <View key={index} style={[styles.job, { borderColor: tintColor }]}>
-            <TouchableOpacity
-              style={[styles.accView]}
-              onPress={() => toggleAccordion(index)}
-            >
-              <CustomText size={15} style={styles.title}>
-                {job.title}
-              </CustomText>
-              <AntDesign
-                name={activeIndex === index ? "caretup" : "caretdown"}
-                size={24}
-                color="white"
-              />
-            </TouchableOpacity>
-            {activeIndex === index && (
-              <View style={styles.descriptionContainer}>
-                <View style={styles.descItem}>
-                  <CustomText size={13} style={styles.description}>
-                    {job.description}
+      <View>
+        {data !== null
+          ? data.map((job: any, index: any) => (
+              <View
+                key={`${job.title}${index}`}
+                style={[styles.job, { borderColor: tintColor }]}
+              >
+                <TouchableOpacity
+                  style={[styles.accView]}
+                  onPress={() => toggleAccordion(index)}
+                >
+                  <CustomText size={15} style={styles.title}>
+                    {job.title}
                   </CustomText>
-                </View>
+                  <AntDesign
+                    name={activeIndex === index ? "caretup" : "caretdown"}
+                    size={24}
+                    color={tintColor}
+                  />
+                </TouchableOpacity>
+                {activeIndex === index && (
+                  <View style={styles.descriptionContainer}>
+                    {job.description.map((desc: any, descIndex: any) => (
+                      <View key={descIndex} style={styles.descItem}>
+                        <CustomText
+                          size={14}
+                          style={[
+                            styles.header,
+                            { textDecorationColor: tintColor },
+                          ]}
+                        >
+                          {desc.header}
+                        </CustomText>
+                        <CustomText size={13} style={styles.description}>
+                          {desc.experience}
+                        </CustomText>
+                      </View>
+                    ))}
+                  </View>
+                )}
               </View>
-            )}
-          </View>
-        ))}
+            ))
+          : list.map((job: any, index: any) => (
+              <View
+                key={`${job.name}${index}`}
+                style={[styles.job, { borderColor: tintColor }]}
+              >
+                <TouchableOpacity
+                  style={[styles.accView]}
+                  onPress={() => toggleAccordion(index)}
+                >
+                  <CustomText size={15} style={styles.title}>
+                    {job.title}
+                  </CustomText>
+                  <AntDesign
+                    name={activeIndex === index ? "caretup" : "caretdown"}
+                    size={24}
+                    color={tintColor}
+                  />
+                </TouchableOpacity>
+                {activeIndex === index && (
+                  <View style={styles.descriptionContainer}>
+                    <View style={styles.descItem}>
+                      <CustomText size={13} style={styles.description}>
+                        {job.description}
+                      </CustomText>
+                    </View>
+                  </View>
+                )}
+              </View>
+            ))}
+      </View>
     </ScrollView>
   );
 };
@@ -135,8 +137,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    borderRadius: 10,
-    borderWidth: 2,
     padding: 10,
   },
   job: {

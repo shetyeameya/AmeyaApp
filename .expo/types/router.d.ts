@@ -7,7 +7,7 @@ declare module "expo-router" {
   export * from 'expo-router/build';
 
   // prettier-ignore
-  type StaticRoutes = `/` | `/(tabs)/_layout` | `/_layout` | `/(tabs)/home/_layout` | `/home/_layout` | `/(tabs)/home/aboutMe` | `/home/aboutMe` | `/(tabs)/home/extra` | `/home/extra` | `/(tabs)/home/` | `/home/` | `/(tabs)/home` | `/(tabs)/two` | `/two` | `/+html` | `/.DS_Store` | `/modal`;
+  type StaticRoutes = `/` | `/(tabs)/_layout` | `/_layout` | `/(tabs)/home/_layout` | `/home/_layout` | `/(tabs)/home/aboutMe` | `/home/aboutMe` | `/(tabs)/home/coverletter` | `/home/coverletter` | `/(tabs)/home/experience` | `/home/experience` | `/(tabs)/home/extra` | `/home/extra` | `/(tabs)/home/` | `/home/` | `/(tabs)/home` | `/(tabs)/home/resume` | `/home/resume` | `/(tabs)/home/romeo` | `/home/romeo` | `/(tabs)/pokemonGo/_layout` | `/pokemonGo/_layout` | `/(tabs)/pokemonGo/` | `/pokemonGo/` | `/(tabs)/pokemonGo` | `/(tabs)/pokemonGo/pokeModal` | `/pokemonGo/pokeModal` | `/+html` | `/.DS_Store` | `/modal`;
   // prettier-ignore
   type DynamicRoutes<T extends string> = `/${CatchAllRoutePart<T>}`;
   // prettier-ignore

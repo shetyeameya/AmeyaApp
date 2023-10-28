@@ -1,24 +1,44 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
 import { Text, View } from "../../../components/Themed";
 import Home from "../../../components/Home/Home";
+import { useThemeColor } from "../../../components/Themed";
+import {
+  datkbackgroundColor,
+  lightbackgroundColor,
+  tintColorDark,
+  tintColorLight,
+  yellowColor,
+} from "../../../constants/Colors";
 import CustomText, { MonoText } from "../../../components/StyledText";
-
+import {
+  useAuthPopupDispatch,
+  useAuthPopupState,
+} from "../../../Context/loginSingContext";
+import React from "react";
 export default function TabOneScreen() {
+  const { Email, FirstName } = useAuthPopupState();
+  const tintColor = useThemeColor(
+    { light: tintColorLight, dark: tintColorDark },
+    "tint"
+  );
   return (
-    <View style={styles.container}>
-      <CustomText
-        fontFamily={"TiltNeon"}
-        size={18}
-        style={{
-          textAlign: "center",
-          width: "100%",
-        }}
-      >
-        “Life is like riding a bicycle. To keep balance you need to move on”.
-      </CustomText>
-      <View style={styles.separator} lightColor="#eee" darkColor="orange" />
-      <Home />
-    </View>
+    <ScrollView>
+      <View style={styles.container}>
+        <CustomText
+          fontFamily={"TiltNeon"}
+          size={15}
+          style={{
+            textAlign: "center",
+            width: "100%",
+          }}
+        >
+          Hello {FirstName}, this is just an demo app for my resume. Please let
+          me know if there could be any improvement made here.
+        </CustomText>
+
+        <Home />
+      </View>
+    </ScrollView>
   );
 }
 
@@ -33,10 +53,5 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "100%",
   },
 });
