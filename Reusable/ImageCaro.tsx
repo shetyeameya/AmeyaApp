@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { TapGestureHandler, State } from "react-native-gesture-handler";
+import { tintColorDark } from "../constants/Colors";
 
 const { width } = Dimensions.get("window");
 const minusVal = (Dimensions.get("window").width * 4) / 100;
@@ -34,7 +35,11 @@ const CustomCarousel: React.FC<Props> = ({ images, uri }) => {
   };
 
   return (
-    <View>
+    <View
+      style={{
+        flex: 1,
+      }}
+    >
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -42,7 +47,6 @@ const CustomCarousel: React.FC<Props> = ({ images, uri }) => {
         style={{
           width: "100%",
           height: 400,
-          borderRadius: 20,
           marginVertical: 20,
           overflow: "hidden",
         }}
@@ -63,15 +67,24 @@ const CustomCarousel: React.FC<Props> = ({ images, uri }) => {
                     width: width - minusVal,
                     height: 400,
                     borderRadius: 20,
+                    borderWidth: 2,
+                    borderColor: tintColorDark,
                     overflow: "hidden",
                   }}
-                  resizeMode="contain"
+                  resizeMode="cover"
                 />
               ) : (
                 <Image
                   key={index}
                   source={image}
-                  style={{ width: width - minusVal, height: 400 }}
+                  style={{
+                    width: width - minusVal,
+                    height: 400,
+                    borderRadius: 20,
+                    borderWidth: 2,
+                    borderColor: tintColorDark,
+                    overflow: "hidden",
+                  }}
                   resizeMode="cover"
                 />
               )}
